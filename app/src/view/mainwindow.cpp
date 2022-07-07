@@ -11,16 +11,21 @@ MainWindow::MainWindow(const QStringList &args, QWidget *parent)
     mWorker = new Worker();
     mWorker->moveToThread(&mThread);
     connect(&mThread, SIGNAL(finished()), mWorker, SLOT(deleteLater()));
-    connect(this, SIGNAL(testRequested()), mWorker, SLOT(test()));
+    connect(mWorker, SIGNAL(editDone()), this, SLOT(onEditDone()));
     connect(mWorker, SIGNAL(testDone()), this, SLOT(onTestDone()));
-    connect(this, SIGNAL(trainRequested()), mWorker, SLOT(train()));
     connect(mWorker, SIGNAL(trainDone()), this, SLOT(onTrainDone()));
-    connect(this, SIGNAL(tradeRequested()), mWorker, SLOT(trade()));
     connect(mWorker, SIGNAL(tradeDone()), this, SLOT(onTradeDone()));
+    connect(mWorker, SIGNAL(resultDone()), this, SLOT(onResultDone()));
+    connect(this, SIGNAL(editRequested()), mWorker, SLOT(edit()));
+    connect(this, SIGNAL(testRequested()), mWorker, SLOT(test()));
+    connect(this, SIGNAL(trainRequested()), mWorker, SLOT(train()));
+    connect(this, SIGNAL(tradeRequested()), mWorker, SLOT(trade()));
+    connect(this, SIGNAL(resultRequested()), mWorker, SLOT(result()));
 
     // start worker
     mThread.start();
 
+    ui->pbTest->setFocus();
 
 }
 
@@ -37,7 +42,7 @@ void MainWindow::on_pbEdit_released()
     emit this->editRequested();
 }
 
-void MainWindow::on_pbTest_released()
+void MainWindow::on_pbTest_clicked()
 {
     ui->pbTest->setEnabled(false);
     emit this->testRequested();
@@ -79,3 +84,4 @@ void MainWindow::onResultDone()
 {
     ui->pbResult->setEnabled(true);
 }
+

@@ -119,6 +119,7 @@ add_executable(Algo
     ${SRC}/controller/pyutil.cpp
     ${SRC}/controller/pyutil.h
     ${SRC}/controller/util.cpp
+    ${SRC}/controller/util.h
     ${SRC}/controller/pyutil.h
     ${SRC}/windows.rc
 )

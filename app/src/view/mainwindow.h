@@ -25,7 +25,7 @@ signals:
 
 private slots:
     void on_pbEdit_released();
-    void on_pbTest_released();
+    void on_pbTest_clicked();
     void on_pbTrain_released();
     void on_pbTrade_released();
     void on_pbResult_released();
@@ -34,6 +34,8 @@ private slots:
     void onTrainDone();
     void onTradeDone();
     void onResultDone();
+
+
 
 private:
     Ui::MainWindow *ui;

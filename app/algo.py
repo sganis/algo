@@ -5,11 +5,13 @@ import importlib
 import types
 
 
-class Engine():
+class Algo():
+
     def __init__(self):
         self.current_strategy = ''
         self.init_run = True
         self.run_num = 0
+        
     def start(self):
         self.run_num += 1
         self.run()
@@ -17,22 +19,22 @@ class Engine():
         for r in range(10):
             self.run_num += 1
             self.run()
-            
-e = Engine()
+
+e = Algo()
 
 
-def main():
+def run(name):
     print('running main...')
-    modules = {}
     DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
     sys.path.insert(0,f'{DIR}/strategies')
-
-    for f in glob.glob(f'{DIR}/strategies/*.py'):
-        name = os.path.basename(f)[:-3]
-        modules[name] = importlib.import_module(name)
-    
+    try:
+        strategy = importlib.import_module(name)
+    except:
+        print(f'cannot import module {name}')
+        return
+        
     e.current_strategy = 'hello'
-    e.run = types.MethodType(modules['hello'].run, e)
+    e.run = types.MethodType(strategy.run, e)
 
     e.start()
     
@@ -40,4 +42,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+
+    run(sys.argv[1])

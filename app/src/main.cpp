@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    printf("starting Datanoor %s...\n", APP_VERSION);
+    printf("starting Algo %s...\n", APP_VERSION);
     // c++ is needed to get the app path and set lib path before QApplication instance
     QString app_path = QString::fromLatin1(normalize_path(get_dir(get_fullpath(std::string(argv[0])))).c_str());
 

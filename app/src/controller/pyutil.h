@@ -66,12 +66,9 @@ inline int python_init(const char* prog, const QString& app_path, wchar_t *progr
     //PyList_Insert(sys_path, 0, PyString_FromString((char*)QString(path +"/lib").toStdString().c_str()));
 #elif defined(Q_OS_MAC)
     // clear sys.path
-    //PySys_SetObject((char*)"path", PyList_New(0));
     PyObject* sys_path = PySys_GetObject((char*)"path");
-    //PyList_Insert(sys_path, 0, PyString_FromString((char*)QString(path +"/lib/python27.zip").toStdString().c_str()));
     PyRun_SimpleString("import sys; print ('python path:'); print('\\n'.join(sys.path)); sys.stdout.flush()");
-    PyList_Insert(sys_path, 0, PyUnicode_FromString((char*)QString(app_path +QStringLiteral("/plugins")).toStdString().c_str()));
-    //PyList_Insert(sys_path, 0, PyString_FromString((char*)QString(path +"/lib").toStdString().c_str()));
+    PyList_Insert(sys_path, 0, PyUnicode_FromString((char*)QString(app_path +"/strategies").toStdString().c_str()));
 #endif
 
     // test
@@ -82,10 +79,6 @@ inline int python_init(const char* prog, const QString& app_path, wchar_t *progr
     qDebug("loading textimport plugin...");
     PyRun_SimpleString("import textimport");
     PyRun_SimpleString("print(textimport.__file__)");
-
-    //QDateTime t = QDateTime::fromString("06/30/2015 12:40:42 AM","MM/dd/yyyy hh:mm:ss A");
-    //qDebug()  << t;
-    //qDebug()<< "integer bytes:" << sizeof(std::size_t);
 
     return 0;
 }

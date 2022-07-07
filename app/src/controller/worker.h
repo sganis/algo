@@ -10,13 +10,19 @@ class Worker : public QObject
 public:
     Worker() {}
 public Q_SLOTS:
+    void edit();
     void test();
     void train();
     void trade();
+    void result();
+
 signals:
+    void editDone();
     void testDone();
     void trainDone();
     void tradeDone();
+    void resultDone();
+
 private:
 
 };
